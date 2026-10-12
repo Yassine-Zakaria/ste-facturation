@@ -18,9 +18,15 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', SECRET_KEY)
 DEBUG = os.environ.get('DJANGO_DEBUG', str(DEBUG)).lower() == 'true'
 
 ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
-ALLOWED_HOSTS += [' .onrender.com','ste-facturation.onrender.com']
+if '' in ALLOWED_HOSTS or '*'in ALLOWED_HOSTS:
+    ALLOWED_HOSTS = ['*']
 
+ALLOWED_HOSTS += ['.onrender.com','ste-facturation.onrender.com']
+
+STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
 
 EMAIL_HOST = os.environ.get('EMAIL_HOST', '')
 EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587')) if EMAIL_HOST else 0
