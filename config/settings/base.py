@@ -23,6 +23,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -69,6 +70,14 @@ LANGUAGE_CODE = 'fr-fr'
 TIME_ZONE = 'Africa/Ndjamena'
 USE_I18N = True
 USE_TZ = True
+
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
+if '' in ALLOWED_HOSTS or '*'in ALLOWED_HOSTS:
+    ALLOWED_HOSTS = ['*']
+
+ALLOWED_HOSTS += ['.onrender.com','ste-facturation.onrender.com']
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
