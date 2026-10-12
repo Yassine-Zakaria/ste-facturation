@@ -1,0 +1,131 @@
+{% extends 'base.html' %}
+
+{% block title %}Tableau de bord STE{% endblock %}
+
+{% block extra_css %}
+<style>
+    .hero {
+        background: linear-gradient(135deg, rgba(13,110,253,0.93), rgba(25,135,84,0.84));
+        color: white;
+        padding: 70px 22px 26px;
+        border-radius: 26px;
+        margin-bottom: 28px;
+        text-align: center;
+        box-shadow: 0 18px 40px rgba(13, 110, 253, 0.18);
+    }
+
+    .hero h1 {
+        font-weight: 800;
+        margin-bottom: 12px;
+    }
+
+    .dashboard-actions {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 12px;
+        margin-top: 22px;
+    }
+
+    .dashboard-actions .btn {
+        min-height: 52px;
+        border-radius: 14px;
+        font-weight: 600;
+        padding: 0.75rem 0.9rem;
+    }
+
+    .stat-card {
+        transition: transform 0.25s ease, box-shadow 0.25s ease;
+        border-radius: 20px;
+        overflow: hidden;
+        border: 1px solid rgba(148, 163, 184, 0.2);
+    }
+
+    .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 18px 32px rgba(15, 23, 42, 0.09);
+    }
+
+    .stat-card .card-body {
+        padding: 1.4rem 1rem;
+    }
+
+    .quick-cta {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+        margin-top: 18px;
+    }
+
+    .quick-cta .btn {
+        min-height: 58px;
+        border-radius: 16px;
+        font-weight: 700;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <section class="hero">
+        <div class="container">
+            <h1 class="display-5">Tableau de bord STE</h1>
+            <p class="lead mb-0">Visualisez vos indicateurs clés et gérez vos factures en toute simplicité.</p>
+            <div class="dashboard-actions">
+                <a href="{% url 'ajouter' %}" class="btn btn-light">+ Nouvelle facture</a>
+                <a href="{% url 'liste_factures' %}" class="btn btn-outline-light">Factures</a>
+                <a href="{% url 'paiements' %}" class="btn btn-outline-light">Paiements</a>
+                <a href="{% url 'statistiques_avancees' %}" class="btn btn-outline-light">Statistiques</a>
+                <a href="{% url 'export_report_pdf' %}" class="btn btn-light">📄 Export PDF</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-3">
+        <div class="row text-center mb-4">
+            <div class="col-12">
+                <h2 class="fw-bold">Statistiques</h2>
+                <p class="text-muted mb-0">Un aperçu rapide de vos données</p>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm h-100 text-center border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">📑 Nombre de factures</h5>
+                        <h2 class="fw-bold">{{ total_factures }}</h2>
+                        <p class="text-muted mb-0">Factures enregistrées</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm h-100 text-center border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">💰 Total encaissé</h5>
+                        <h2 class="fw-bold">{{ total_encaisse }} FCFA</h2>
+                        <p class="text-muted mb-0">Montant cumulé</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card stat-card shadow-sm h-100 text-center border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">💧 Consommation moyenne</h5>
+                        <h2 class="fw-bold">{{ conso_moyenne }} m³</h2>
+                        <p class="text-muted mb-0">Par client</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-4">
+        <div class="quick-cta">
+            <a href="{% url 'liste_factures' %}" class="btn btn-primary">📑 Voir toutes</a>
+            <a href="{% url 'ajouter' %}" class="btn btn-success">➕ Ajouter</a>
+        </div>
+    </section>
+</div>
+{% endblock %}

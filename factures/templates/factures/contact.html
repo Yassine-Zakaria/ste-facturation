@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Service client STE{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <div class="contact-shell">
+        <div class="contact-card">
+            <div class="d-flex align-items-center gap-3 mb-4">
+                <img src="{% static 'factures/images/ste_logo.jpg' %}" alt="Logo STE" class="brand-logo" style="width: 64px; height: 64px;">
+                <div>
+                    <span class="section-tag">Contact</span>
+                    <h1 class="mb-0">Service client STE</h1>
+                </div>
+            </div>
+
+            <p class="text-muted">Pour toute demande concernant votre facture, votre consommation, votre compte ou un besoin de suivi, notre équipe vous répond avec sérieux et réactivité.</p>
+
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+
+            <form method="post" class="row g-3">
+                {% csrf_token %}
+                <div class="col-md-6">
+                    <label class="form-label">Nom complet</label>
+                    {{ form.nom }}
+                    {% if form.nom.errors %}<div class="text-danger">{{ form.nom.errors|join:", " }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}<div class="text-danger">{{ form.email.errors|join:", " }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Téléphone</label>
+                    {{ form.telephone }}
+                    {% if form.telephone.errors %}<div class="text-danger">{{ form.telephone.errors|join:", " }}</div>{% endif %}
+                </div>
+                <div class="col-md-6">
+                    <label class="form-label">Objet</label>
+                    {{ form.objet }}
+                    {% if form.objet.errors %}<div class="text-danger">{{ form.objet.errors|join:", " }}</div>{% endif %}
+                </div>
+                <div class="col-12">
+                    <label class="form-label">Message</label>
+                    {{ form.message }}
+                    {% if form.message.errors %}<div class="text-danger">{{ form.message.errors|join:", " }}</div>{% endif %}
+                </div>
+                <div class="col-12">
+                    <button type="submit" class="btn btn-primary">Envoyer le message</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="contact-info">
+            <span class="section-tag">Nous joindre</span>
+            <h2 class="mt-2 mb-3">Coordonnées STE</h2>
+            <ul class="contact-list">
+                <li><span class="contact-bullet">📍</span> Kasko, centre de santé N°2, Guelegndeng</li>
+                <li><span class="contact-bullet">📞</span> +235 66691859</li>
+                <li><span class="contact-bullet">✉️</span> yassine.zakaria66@gmail.com</li>
+                <li><span class="contact-bullet">🕒</span> Lundi - Samedi : 08h00 - 18h00</li>
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

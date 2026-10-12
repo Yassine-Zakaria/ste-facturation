@@ -1,0 +1,68 @@
+{% extends 'base.html' %}
+
+{% block title %}STE | Service client{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <section class="home-hero">
+        <div class="hero-content">
+            <span class="hero-badge">STE • Gestion intelligente</span>
+            <h1>Une solution moderne pour la facturation et la gestion de l’eau</h1>
+            <p>
+                Centralisez les factures, suivez les consommations, pilotez les performances
+                et sécurisez l’accès selon le profil de chaque utilisateur.
+            </p>
+            <div class="hero-actions">
+                <a href="{% url 'login' %}" class="btn btn-primary btn-lg">Se connecter</a>
+                <a href="{% url 'admin_login' %}" class="btn btn-outline-light btn-lg">Espace admin</a>
+                <a href="{% url 'contact' %}" class="btn btn-light btn-lg">Contact</a>
+            </div>
+        </div>
+    </section>
+
+    <section class="home-metrics">
+        <div class="metric-card">
+            <div class="metric-icon">💧</div>
+            <h3>Suivi consommation</h3>
+            <p>Contrôlez les volumes, les index et les montants de manière fiable.</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">📄</div>
+            <h3>Facturation centralisée</h3>
+            <p>Gérez toutes les factures dans un système unique et professionnel.</p>
+        </div>
+        <div class="metric-card">
+            <div class="metric-icon">🛡️</div>
+            <h3>Accès sécurisé</h3>
+            <p>Rôles distincts pour administrateurs et clients avec contrôle strict.</p>
+        </div>
+    </section>
+
+    <section class="feature-panel">
+        <div class="feature-copy">
+            <span class="section-tag">Pourquoi choisir STE Facturation ?</span>
+            <h2>Un outil pensé pour la performance et la confiance</h2>
+            <ul>
+                <li>Interface moderne et responsive</li>
+                <li>Tableau de bord d’administration clair</li>
+                <li>Gestion des factures plus rapide et plus fiable</li>
+                <li>Accès différencié selon chaque profil</li>
+            </ul>
+        </div>
+        <div class="feature-visual">
+            <div class="mini-card top-card">
+                <span>Factures générées</span>
+                <strong>+ 1 250</strong>
+            </div>
+            <div class="mini-card center-card">
+                <span>Montant encaissé</span>
+                <strong>18.4 M FCFA</strong>
+            </div>
+            <div class="mini-card bottom-card">
+                <span>Conso. moyenne</span>
+                <strong>32.7 m³</strong>
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

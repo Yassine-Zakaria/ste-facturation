@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}Tableau des Factures STE{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <div class="page-card">
+        <div class="page-header">
+            <div class="title-wrap">
+                <div class="title-icon">💧</div>
+                <h2>Tableau des Factures STE</h2>
+            </div>
+            <a href="{% url 'ajouter' %}" class="btn btn-primary">+ Ajouter une facture</a>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>N°</th>
+                        <th>Matricule</th>
+                        <th>Client</th>
+                        <th>Quartier</th>
+                        <th>N° Quartier</th>
+                        <th>Calibre</th>
+                        <th>Ancien Index</th>
+                        <th>Nouvel Index</th>
+                        <th>Conso</th>
+                        <th>MT HT</th>
+                        <th>Location Compteur</th>
+                        <th>Entretien Branchement</th>
+                        <th>Mois</th>
+                        <th>Date</th>
+                        <th>Statut</th>
+                        <th>Total</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for facture in object_list %}
+                    <tr>
+                        <td>{{ facture.numero_facture }}</td>
+                        <td>{{ facture.matricule_client }}</td>
+                        <td>{{ facture.nom_client }}</td>
+                        <td>{{ facture.quartier }}</td>
+                        <td>{{ facture.numero_quartier }}</td>
+                        <td>{{ facture.calibre }}</td>
+                        <td>{{ facture.ancien_index }}</td>
+                        <td>{{ facture.nouvel_index }}</td>
+                        <td>{{ facture.conso }}</td>
+                        <td>{{ facture.mt_ht }} FCFA</td>
+                        <td>{{ facture.location_compteur }} FCFA</td>
+                        <td>{{ facture.entretien_branchement }} FCFA</td>
+                        <td>{{ facture.mois }}</td>
+                        <td>{{ facture.date_facture }}</td>
+                        <td>
+                            {% if facture.statut_paiement == 'paye' %}<span class="badge bg-success">Payé</span>
+                            {% elif facture.statut_paiement == 'partiel' %}<span class="badge bg-warning text-dark">Partiel</span>
+                            {% elif facture.statut_paiement == 'impaye' %}<span class="badge bg-danger">Impayé</span>
+                            {% else %}<span class="badge bg-secondary">En attente</span>
+                            {% endif %}
+                        </td>
+                        <td><span class="badge-total">{{ facture.net_a_payer }} FCFA</span></td>
+                        <td>
+                            <div class="d-flex flex-wrap justify-content-center align-items-center">
+                                <a href="{% url 'modifier' facture.pk %}" class="btn btn-warning btn-sm btn-action">✏️ Modifier</a>
+                                <a href="{% url 'supprimer' facture.pk %}" class="btn btn-danger btn-sm btn-action">🗑️ Supprimer</a>
+                                <a href="{% url 'imprimer' facture.pk %}" class="btn btn-success btn-sm btn-action">🖨️ Imprimer</a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="17" class="empty-box">Aucune facture enregistrée</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

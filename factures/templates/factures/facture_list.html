@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Factures STE</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f8f9fa; }
+        .table thead {
+            background-color: #0d6efd;
+            color: white;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: #f8f9fa;
+        }
+        .btn-action {
+            margin-right: 5px;
+        }
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+    </style>
+</head>
+<body>
+<div class="container mt-4">
+    <div class="page-header">
+        <h2 class="fw-bold text-primary">💧 Tableau des Factures STE</h2>
+        <a href="{% url 'ajouter' %}" class="btn btn-primary">+ Ajouter une facture</a>
+    </div>
+
+    <table class="table table-striped table-bordered shadow-sm align-middle">
+        <thead>
+            <tr>
+                <th>N°</th>
+                <th>Matricule</th>
+                <th>Client</th>
+                <th>Quartier</th>
+                <th>N° Quartier</th>
+                <th>Calibre</th>
+                <th>Ancien Index</th>
+                <th>Nouvel Index</th>
+                <th>Conso</th>
+                <th>MT HT</th>
+                <th>Location Compteur</th>
+                <th>Entretien Branchement</th>
+                <th>Mois</th>
+                <th>Date</th>
+                <th>Total</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for facture in object_list %}
+            <tr>
+                <td>{{ facture.numero_facture }}</td>
+                <td>{{ facture.matricule_client }}</td>
+                <td>{{ facture.nom_client }}</td>
+                <td>{{ facture.quartier }}</td>
+                <td>{{ facture.numero_quartier }}</td>
+                <td>{{ facture.calibre }}</td>
+                <td>{{ facture.ancien_index }}</td>
+                <td>{{ facture.nouvel_index }}</td>
+                <td>{{ facture.conso }}</td>
+                <td>{{ facture.mt_ht }} FCFA</td>
+                <td>{{ facture.location_compteur }} FCFA</td>
+                <td>{{ facture.entretien_branchement }} FCFA</td>
+                <td>{{ facture.mois }}</td>
+                <td>{{ facture.date_facture }}</td>
+                <td class="fw-bold text-success">{{ facture.net_a_payer }} FCFA</td>
+                <td>
+                    <a href="{% url 'modifier' facture.pk %}" class="btn btn-warning btn-sm btn-action">
+                        ✏️ Modifier
+                    </a>
+                    <a href="{% url 'imprimer' facture.pk %}" class="btn btn-success btn-sm">
+                        🖨️ Imprimer
+                    </a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="16" class="text-center text-muted">Aucune facture enregistrée</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

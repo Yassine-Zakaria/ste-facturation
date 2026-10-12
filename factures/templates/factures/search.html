@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Recherche de factures{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <div class="page-card">
+        <div class="page-header">
+            <div class="title-wrap">
+                <div class="title-icon">🔎</div>
+                <h2>Recherche rapide</h2>
+            </div>
+        </div>
+
+        <form method="get" class="search-form">
+            <input type="text" name="q" class="form-control" value="{{ query }}" placeholder="Rechercher par N° facture, matricule, client ou quartier">
+            <button type="submit" class="btn btn-primary">Rechercher</button>
+        </form>
+
+        {% if query %}
+            <div class="summary-box">
+                <h3>{{ count }} résultat(s) trouvé(s)</h3>
+                <p>Recherche effectuée sur les factures, clients et zones de distribution.</p>
+            </div>
+        {% endif %}
+
+        <div class="table-responsive">
+            <table class="table table-striped align-middle">
+                <thead>
+                    <tr>
+                        <th>N° Facture</th>
+                        <th>Client</th>
+                        <th>Matricule</th>
+                        <th>Quartier</th>
+                        <th>Consommation</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for facture in results %}
+                    <tr>
+                        <td>{{ facture.numero_facture }}</td>
+                        <td>{{ facture.nom_client }}</td>
+                        <td>{{ facture.matricule_client }}</td>
+                        <td>{{ facture.quartier }}</td>
+                        <td>{{ facture.conso }} m³</td>
+                        <td><span class="badge-total">{{ facture.net_a_payer }} FCFA</span></td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="empty-box">Aucun résultat pour votre recherche.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

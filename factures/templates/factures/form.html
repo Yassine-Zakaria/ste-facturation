@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block title %}Ajouter une facture{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <div class="form-card">
+        <div class="page-header">
+            <div class="title-wrap">
+                <div class="title-icon">💧</div>
+                <h2>Nouvelle Facture</h2>
+            </div>
+        </div>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <div class="form-grid">
+                {% for field in form %}
+                    <div class="field-wrap">
+                        <label class="form-label" for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="text-muted">{{ field.help_text }}</small>
+                        {% endif %}
+                        {% if field.errors %}
+                            <div class="text-danger">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Enregistrer</button>
+                <a href="{% url 'liste_factures' %}" class="btn btn-secondary">Annuler</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+document.querySelectorAll('input, textarea, select').forEach(e => {
+    e.classList.add('form-control');
+});
+</script>
+{% endblock %}

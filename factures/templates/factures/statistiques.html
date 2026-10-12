@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+
+{% block title %}Statistiques avancées STE{% endblock %}
+
+{% block extra_css %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <div class="page-card">
+        <div class="page-header">
+            <div class="title-wrap">
+                <div class="title-icon">📊</div>
+                <h2>Statistiques avancées</h2>
+            </div>
+        </div>
+
+        <div class="stat-list">
+            <div class="stat-box">
+                <h4>Encaissement total</h4>
+                <strong>{{ total_encaisse }} FCFA</strong>
+            </div>
+            <div class="stat-box">
+                <h4>Consommation totale</h4>
+                <strong>{{ consommation_totale }} m³</strong>
+            </div>
+            <div class="stat-box">
+                <h4>Moyenne / client</h4>
+                <strong>{{ moyenne_consommation }} m³</strong>
+            </div>
+        </div>
+
+        <div class="mt-4 mb-3 d-flex justify-content-end">
+            <a href="{% url 'export_report_pdf' %}" class="btn btn-primary">📄 Télécharger le rapport PDF</a>
+        </div>
+
+        <div class="row mt-4 g-4">
+            <div class="col-lg-6">
+                <div class="chart-panel">
+                    <h3 class="fw-bold mb-3">Recettes par quartier</h3>
+                    <canvas id="quartierChart"></canvas>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="chart-panel">
+                    <h3 class="fw-bold mb-3">Évolution par période</h3>
+                    <canvas id="periodeChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4 g-4">
+            <div class="col-lg-6">
+                <h3 class="fw-bold mb-3">Par quartier</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Quartier</th>
+                                <th>Montant</th>
+                                <th>Clients</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in par_quartier %}
+                            <tr>
+                                <td>{{ item.quartier }}</td>
+                                <td>{{ item.total }} FCFA</td>
+                                <td>{{ item.clients }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="empty-box">Aucune donnée disponible.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <h3 class="fw-bold mb-3">Par période</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Période</th>
+                                <th>Montant</th>
+                                <th>Volume</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in par_mois %}
+                            <tr>
+                                <td>{{ item.mois }}</td>
+                                <td>{{ item.total }} FCFA</td>
+                                <td>{{ item.volume }} m³</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="3" class="empty-box">Aucune statistique calculée.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+const quartierLabels = {{ quartier_labels|safe }};
+const quartierValues = {{ quartier_values|safe }};
+const periodeLabels = {{ mois_labels|safe }};
+const periodeValues = {{ mois_values|safe }};
+
+new Chart(document.getElementById('quartierChart'), {
+    type: 'bar',
+    data: {
+        labels: quartierLabels,
+        datasets: [{
+            label: 'Montant encaissé',
+            data: quartierValues,
+            backgroundColor: ['#0ea5e9', '#2563eb', '#10b981', '#f59e0b', '#ef4444'],
+            borderRadius: 10
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            y: { beginAtZero: true, ticks: { callback: (value) => value + ' FCFA' } }
+        }
+    }
+});
+
+new Chart(document.getElementById('periodeChart'), {
+    type: 'line',
+    data: {
+        labels: periodeLabels,
+        datasets: [{
+            label: 'Encaissement',
+            data: periodeValues,
+            borderColor: '#2563eb',
+            backgroundColor: 'rgba(37, 99, 235, 0.15)',
+            tension: 0.35,
+            fill: true,
+            pointRadius: 5,
+            pointBackgroundColor: '#0ea5e9'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+            y: { beginAtZero: true, ticks: { callback: (value) => value + ' FCFA' } }
+        }
+    }
+});
+</script>
+{% endblock %}

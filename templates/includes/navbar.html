@@ -1,0 +1,44 @@
+{% load static %}
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+    <div class="container">
+        <a class="navbar-brand fw-bold d-flex align-items-center gap-2" href="{% if user.is_authenticated and user.is_staff %}{% url 'dashboard' %}{% elif user.is_authenticated %}{% url 'client_space' %}{% else %}{% url 'home' %}{% endif %}">
+            <img src="{% static 'factures/images/ste_logo.jpg' %}" alt="Logo STE" class="brand-logo">
+            <span>Service client STE</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="mainNavbar">
+            <ul class="navbar-nav ms-auto align-items-lg-center">
+                {% if user.is_authenticated and user.is_staff %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'dashboard' %}">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'liste_factures' %}">Factures</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'ajouter' %}">Ajouter</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'paiements' %}">Paiements</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'recherche_factures' %}">Recherche</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'statistiques_avancees' %}">Statistiques</a></li>
+                {% elif user.is_authenticated and user.groups.exists %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'agent_space' %}">Collecte</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'ajouter' %}">Saisie</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'liste_factures' %}">Factures</a></li>
+                {% elif user.is_authenticated %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'client_space' %}">Mon espace</a></li>
+                {% else %}
+                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Accueil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'contact' %}">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Connexion</a></li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-outline-light btn-sm" href="{% url 'logout' %}">Déconnexion</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item ms-lg-3">
+                        <a class="btn btn-primary btn-sm" href="{% url 'login' %}">Connexion</a>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

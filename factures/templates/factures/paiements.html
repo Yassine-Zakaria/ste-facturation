@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+
+{% block title %}Suivi des paiements STE{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <div class="page-card">
+        <div class="page-header">
+            <div class="title-wrap">
+                <div class="title-icon">💳</div>
+                <h2>Suivi des paiements</h2>
+            </div>
+        </div>
+
+        <div class="stat-list">
+            <div class="stat-box">
+                <h4>Factures</h4>
+                <strong>{{ total_factures }}</strong>
+            </div>
+            <div class="stat-box">
+                <h4>Montant encaissé</h4>
+                <strong>{{ total_encaisse }} FCFA</strong>
+            </div>
+            <div class="stat-box">
+                <h4>Moyenne / facture</h4>
+                <strong>{{ moyenne_facture }} FCFA</strong>
+            </div>
+        </div>
+
+        <div class="row mt-4 g-4">
+            <div class="col-lg-6">
+                <h3 class="fw-bold mb-3">Répartition par statut</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Statut</th>
+                                <th>Nombre</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in status_summary %}
+                            <tr>
+                                <td>
+                                    {% if item.statut_paiement == 'paye' %}<span class="badge bg-success">Payé</span>
+                                    {% elif item.statut_paiement == 'partiel' %}<span class="badge bg-warning text-dark">Partiel</span>
+                                    {% elif item.statut_paiement == 'impaye' %}<span class="badge bg-danger">Impayé</span>
+                                    {% else %}<span class="badge bg-secondary">En attente</span>
+                                    {% endif %}
+                                </td>
+                                <td>{{ item.count }}</td>
+                            </tr>
+                            {% empty %}
+                            <tr><td colspan="2" class="empty-box">Aucun statut enregistré.</td></tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+                <h3 class="fw-bold mb-3">Top clients</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped align-middle">
+                        <thead>
+                            <tr>
+                                <th>Client</th>
+                                <th>Quartier</th>
+                                <th>Montant</th>
+                                <th>Statut</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for facture in meilleurs_clients %}
+                            <tr>
+                                <td>{{ facture.nom_client }}</td>
+                                <td>{{ facture.quartier }}</td>
+                                <td><span class="badge-total">{{ facture.net_a_payer }} FCFA</span></td>
+                                <td>
+                                    {% if facture.statut_paiement == 'paye' %}<span class="badge bg-success">Payé</span>
+                                    {% elif facture.statut_paiement == 'partiel' %}<span class="badge bg-warning text-dark">Partiel</span>
+                                    {% elif facture.statut_paiement == 'impaye' %}<span class="badge bg-danger">Impayé</span>
+                                    {% else %}<span class="badge bg-secondary">En attente</span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="4" class="empty-box">Aucune donnée de paiement disponible.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

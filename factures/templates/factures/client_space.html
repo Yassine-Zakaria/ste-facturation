@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Espace client{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <div class="page-card">
+        <div class="page-header">
+            <div class="title-wrap">
+                <div class="title-icon">👤</div>
+                <h2>Espace client</h2>
+            </div>
+        </div>
+
+        <div class="alert alert-success mb-4">
+            Bonjour {{ user.username }}, vous êtes connecté à votre espace visiteur.
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Mes informations</h5>
+                        <p class="card-text text-muted mb-0">Consultez votre profil, vos données de visite et vos accès publics.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Suivi et consultation</h5>
+                        <p class="card-text text-muted mb-0">Accès réservé aux informations de consultation et de suivi client.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

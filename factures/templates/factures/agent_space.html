@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+
+{% block title %}Espace collecte client{% endblock %}
+
+{% block content %}
+<div class="container page-shell">
+    <div class="page-card">
+        <div class="page-header">
+            <div class="title-wrap">
+                <div class="title-icon">📋</div>
+                <h2>Espace collecte client</h2>
+            </div>
+        </div>
+
+        <div class="alert alert-success mb-4">
+            Bonjour {{ user.username }}, vous êtes connecté pour la collecte des données clients.
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Collecte des données</h5>
+                        <p class="card-text text-muted mb-3">Saisissez les informations du client, surtout l’ancien index et le nouveau index.</p>
+                        <a href="{% url 'ajouter' %}" class="btn btn-primary">Nouvelle saisie</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body">
+                        <h5 class="card-title">Liste des données</h5>
+                        <p class="card-text text-muted mb-3">Consultez les factures déjà saisies et vérifiez les index enregistrés.</p>
+                        <a href="{% url 'liste_factures' %}" class="btn btn-secondary">Voir la liste</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

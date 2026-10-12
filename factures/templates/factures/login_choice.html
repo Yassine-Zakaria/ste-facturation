@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block content %}
+<div class="container auth-page">
+    <div class="auth-card auth-panel">
+        <div class="auth-header">
+            <div class="auth-icon">🔐</div>
+            <h2>Connexion</h2>
+            <p class="auth-subtitle">Choisissez votre espace d’accès</p>
+        </div>
+
+        <div class="auth-grid">
+            <a href="{% url 'client_login' %}" class="auth-option">
+                <strong>Client visiteur</strong>
+                <span>Accédez à votre espace public</span>
+            </a>
+            <a href="{% url 'agent_login' %}" class="auth-option">
+                <strong>Agent de collecte</strong>
+                <span>Saisir l’ancien index et le nouveau index</span>
+            </a>
+            <a href="{% url 'admin_login' %}" class="auth-option">
+                <strong>Administrateur</strong>
+                <span>Accédez au tableau de bord</span>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
