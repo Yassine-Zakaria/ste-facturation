@@ -16,7 +16,9 @@ if env_path.exists():
 
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', SECRET_KEY)
 DEBUG = os.environ.get('DJANGO_DEBUG', str(DEBUG)).lower() == 'true'
-ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', ','.join(ALLOWED_HOSTS or ['localhost', '127.0.0.1'])).split(',')
+
+ALLOWED_HOSTS = os.environ.get('DJANGO_ALLOWED_HOSTS', '*').split(',')
+ALLOWED_HOSTS += [' .onrender.com','ste-facturation.onrender.com']
 
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
